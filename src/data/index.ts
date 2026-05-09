@@ -78,7 +78,7 @@ export const skillsData = [
   "TypeScript", "Go", "Node.js", "Python","Express.JS", 
   "PostgreSQL", "Redis", "MongoDB", "Kafka",
   "React", "TailwindCSS", "Next.js",
-  "Docker", "AWS", "CI/CD", "GraphQL","Laravel","ASP.NET","RESTAPI"
+  "Docker", "AWS", "CI/CD", "GraphQL","Laravel","ASP.NET","RESTAPI","JWT"
 ];
 
 

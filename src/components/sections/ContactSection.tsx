@@ -15,11 +15,32 @@ export const ContactSection = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success'>('idle');
 
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate network request
     setFormStatus('sending');
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setFormStatus('success');
-    console.log("Form data submitted:", data);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/ethanlopezpyke@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          message: data.message,
+          _subject: "New Contact Form Submission from Patrick Oliver Portfolio",
+        })
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
+      } else {
+        console.error("Form submission failed");
+        setFormStatus('idle');
+      }
+    } catch (error) {
+      console.error(error);
+      setFormStatus('idle');
+    }
   };
 
   return (

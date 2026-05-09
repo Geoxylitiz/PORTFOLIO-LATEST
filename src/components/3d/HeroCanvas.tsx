@@ -69,7 +69,7 @@ export const HeroCanvas = () => {
   return (
     <div className="absolute inset-0 z-0 bg-grid-pattern pointer-events-none opacity-80" aria-hidden="true">
       <Canvas
-        camera={{ position: [0, 5, 20], fov: 45 }}
+        camera={{ position: [0, 5, 20], fov: 35 }}
         gl={{ antialias: true, alpha: true }}
       >
         <ambientLight intensity={1} />
