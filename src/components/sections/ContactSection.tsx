@@ -17,7 +17,7 @@ export const ContactSection = () => {
   const onSubmit = async (data: ContactFormData) => {
     setFormStatus('sending');
     try {
-      const response = await fetch("https://formsubmit.co/ajax/ethanlopezpyke@gmail.com", {
+      const response = await fetch("https://formsubmit.co/ajax/5cbad4d2d51b3498c4cbd50185b10602", {
         method: "POST",
         headers: { 
           'Content-Type': 'application/json',
