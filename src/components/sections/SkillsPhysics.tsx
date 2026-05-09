@@ -1,136 +1,125 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'motion/react';
-import { skillsData } from '../../data';
+import { ShieldCheck } from 'lucide-react';
+import { skillGroups } from '../../data';
 import { CursorHoverBlock } from '../animations/CursorHoverBlock';
+import { cn } from '../../lib/utils';
 
-// ─── Hook: detect mobile breakpoint ───────────────────────────────────────────
-const useIsMobile = (breakpoint = 640) => {
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, [breakpoint]);
-
-  return isMobile;
-};
-
-// ─── Desktop: draggable skill pill ────────────────────────────────────────────
-const SkillPill = ({
+const SkillChip = ({
   skill,
+  index,
   containerRef,
 }: {
   skill: string;
-  containerRef: React.RefObject<HTMLDivElement>;
+  index: number;
+  containerRef: React.RefObject<HTMLDivElement | null>;
 }) => (
-  <CursorHoverBlock className="inline-block p-1">
+  <CursorHoverBlock className="w-full sm:w-auto">
     <motion.div
       drag
       dragConstraints={containerRef}
-      dragElastic={0.2}
-      whileDrag={{ scale: 1.1, zIndex: 50 }}
-      className="brutal-border brutal-shadow bg-[var(--color-accent-1)] px-6 py-3 font-mono text-xl font-bold uppercase select-none cursor-grab active:cursor-grabbing transition-colors hover:bg-white"
-      initial={{ y: Math.random() * 100 - 50, x: Math.random() * 100 - 50, opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ type: 'spring', bounce: 0.5 }}
+      dragElastic={0.12}
+      whileHover={{ y: -4 }}
+      whileDrag={{ scale: 1.08, zIndex: 40 }}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.025, type: 'spring', stiffness: 240, damping: 22 }}
       viewport={{ once: true }}
+      className="brutal-border bg-[var(--color-bg)] px-4 py-3 text-center font-mono text-sm font-black uppercase leading-none text-[var(--color-text)] brutal-shadow select-none cursor-grab active:cursor-grabbing sm:min-w-[128px] md:text-base"
     >
       {skill}
     </motion.div>
   </CursorHoverBlock>
 );
 
-// ─── Mobile: bento cell ───────────────────────────────────────────────────────
-// Cycles through accent colors and makes every 7th cell span 2 columns.
-const BENTO_COLORS = [
-  'bg-[var(--color-accent-1)]',        // yellow
-  'bg-white',
-  'bg-[var(--color-accent-3)]',   
-  'bg-[var(--color-accent-2)]',
-  'bg-[var(--color-accent-1)]',
-  'bg-white',
-];
-
-const BentoCell = ({ skill, index }: { skill: string; index: number }) => {
-  const isWide = (index + 1) % 7 === 0;
-  const colorClass = isWide
-    ? 'bg-[var(--color-black)] text-[var(--color-accent-1)]'
-    : BENTO_COLORS[index % BENTO_COLORS.length];
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ delay: index * 0.03, type: 'spring', stiffness: 200 }}
-      viewport={{ once: true }}
-      className={[
-        'flex items-center justify-center',
-        'border-r-[4px] border-b-[4px] border-[var(--color-black)]',
-        'px-3 py-4 min-h-[56px]',
-        'font-mono font-black text-xs uppercase tracking-wide text-center',
-        'active:scale-95 transition-transform',
-        isWide ? 'col-span-2 text-sm py-5' : '',
-        colorClass,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-    >
-      {skill}
-    </motion.div>
-  );
-};
-
-// ─── Main component ───────────────────────────────────────────────────────────
 export const SkillsPhysics = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
+  const boardRef = useRef<HTMLDivElement>(null);
+  let chipIndex = 0;
 
   return (
-    <section
-      id="skills"
-      className="py-24 px-6 md:px-12 brutal-border-b bg-[var(--color-bg)]"
-    >
-      <div className="container mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: '-100px' }}
-          className="text-5xl md:text-7xl font-sans font-bold uppercase tracking-tighter mb-16 text-center"
-        >
-          Tech_Capabilities
-        </motion.h2>
+    <section id="skills" className="bg-[var(--color-bg)] px-6 py-24 brutal-border-b md:px-12">
+      <div className="container mx-auto max-w-7xl">
+        <div className="mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 42 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: '-100px' }}
+          >
+            <h2 className="font-sans text-5xl md:text-7xl font-black uppercase leading-none tracking-tighter text-center">
+              Capability_Matrix
+            </h2>
+          </motion.div>
+        </div>
 
-        {/* ── MOBILE: Bento box ── */}
-        {isMobile ? (
-          <div
-            className="brutal-border brutal-shadow overflow-hidden"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              borderTop: '4px solid var(--color-black)',
-              borderLeft: '4px solid var(--color-black)',
-            }}
-          >
-            {skillsData.map((skill, index) => (
-              <BentoCell key={index} skill={skill} index={index} />
-            ))}
+        <motion.div
+          ref={boardRef}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          viewport={{ once: true, margin: '-120px' }}
+          className="relative overflow-hidden brutal-border bg-[var(--color-bg)] p-4 brutal-shadow md:p-6"
+        >
+          <div className="absolute inset-0 bg-grid-pattern opacity-20 invert pointer-events-none" />
+          <div className="relative grid grid-cols-1 gap-4 lg:grid-cols-12">
+            <div className="brutal-border bg-[var(--color-accent-1)] p-5 lg:col-span-3 lg:min-h-[520px]">
+              <div className="flex h-full flex-col justify-between gap-10">
+                <div>
+                  <ShieldCheck className="mb-6 h-12 w-12" strokeWidth={3} />
+                  <div className="font-mono text-sm font-black uppercase">Verified Stack</div>
+                  <div className="mt-4 font-sans text-5xl font-black uppercase leading-none tracking-tighter md:text-6xl">
+                    {skillGroups.reduce((acc, group) => acc + group.skills.length, 0)}
+                    <span className="block text-2xl md:text-3xl">Signals</span>
+                  </div>
+                </div>
+
+                <div className="border-t-4 border-black pt-5 font-mono text-sm font-bold uppercase leading-relaxed">
+                  API Design<br />
+                  Data Flow<br />
+                  Delivery<br />
+                  Frontend Runtime
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 lg:col-span-9 lg:grid-cols-2">
+              {skillGroups.map((group, groupIndex) => {
+                const Icon = group.icon;
+
+                return (
+                  <motion.article
+                    key={group.label}
+                    initial={{ opacity: 0, y: 36 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: groupIndex * 0.08, duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="brutal-border bg-white"
+                  >
+                    <div className={cn('flex items-center justify-between gap-4 border-b-4 border-black p-4', group.accent)}>
+                      <div>
+                        <div className="font-mono text-xs font-black uppercase opacity-70">/{group.code}</div>
+                        <h3 className="font-sans text-2xl font-black uppercase leading-none md:text-3xl">{group.label}</h3>
+                      </div>
+                      <Icon className="h-9 w-9 shrink-0" strokeWidth={3} />
+                    </div>
+
+                    <div className="flex min-h-[178px] flex-wrap content-start gap-3 p-4 md:p-5">
+                      {group.skills.map((skill) => (
+                        <SkillChip
+                          key={skill}
+                          skill={skill}
+                          index={chipIndex++}
+                          containerRef={boardRef}
+                        />
+                      ))}
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </div>
           </div>
-        ) : (
-          /* ── DESKTOP: Draggable physics container ── */
-          <div
-            ref={containerRef}
-            className="w-full min-h-[500px] brutal-border bg-white relative overflow-hidden flex flex-wrap content-center justify-center gap-4 p-8 brutal-shadow"
-          >
-            <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
-            {skillsData.map((skill, index) => (
-              <SkillPill key={index} skill={skill} containerRef={containerRef} />
-            ))}
-          </div>
-        )}
+        </motion.div>
       </div>
     </section>
   );

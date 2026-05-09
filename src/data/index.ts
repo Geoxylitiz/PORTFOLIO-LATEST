@@ -1,3 +1,5 @@
+import { Cpu, Database, Globe2, Layers3 } from 'lucide-react';
+
 export const experienceData = [
   {
     id: 1,
@@ -13,7 +15,7 @@ export const experienceData = [
   {
     id: 2,
     company: "Nephila Web Technology Inc.",
-    role: "Fullstack Software Developer",
+    role: "Software Developer",
     dates: "2024 — 2025",
     points: [
       "Built backend modules for an internal HRIS and Payroll platform using Laravel, MySQL, and Eloquent ORM, supporting employee management, leave requests, attendance, and file/document handling.",
@@ -74,11 +76,35 @@ export const projectsData = [
 
 ];
 
-export const skillsData = [
-  "TypeScript", "Go", "Node.js", "Python","Express.JS", 
-  "PostgreSQL", "Redis", "MongoDB", "Kafka",
-  "React", "TailwindCSS", "Next.js",
-  "Docker", "AWS", "CI/CD", "GraphQL","Laravel","ASP.NET","RESTAPI","JWT"
+export const skillGroups = [
+  {
+    label: 'Backend Core',
+    code: 'svc',
+    icon: Cpu,
+    accent: 'bg-[var(--color-accent-1)]',
+    skills: ['Python', 'Node.js', 'Express.JS', 'ASP.NET', 'Laravel', 'RESTAPI', 'GraphQL'],
+  },
+  {
+    label: 'Data Layer',
+    code: 'db',
+    icon: Database,
+    accent: 'bg-[var(--color-accent-3)]',
+    skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Kafka'],
+  },
+  {
+    label: 'Interface Ops',
+    code: 'ui',
+    icon: Layers3,
+    accent: 'bg-white',
+    skills: ['React', 'Next.js', 'TypeScript', 'TailwindCSS'],
+  },
+  {
+    label: 'Deployment',
+    code: 'ship',
+    icon: Globe2,
+    accent: 'bg-[var(--color-accent-2)] text-white',
+    skills: ['Docker', 'AWS', 'CI/CD'],
+  },
 ];
 
 
