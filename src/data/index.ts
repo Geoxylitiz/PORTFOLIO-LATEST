@@ -108,7 +108,40 @@ export const skillGroups = [
 ];
 
 
-
+export const aboutLogsData = [
+  {
+    type: "command",
+    text: "> tail -n 20 /var/log/syslog\n"
+  },
+  {
+    type: "log",
+    text: "[2019] First contact with programming.\n       Started exploring web development,\n       learning HTML, CSS, and JavaScript.\n\n"
+  },
+  {
+    type: "log",
+    text: "[2020] Systems becoming more complex.\n       Moved beyond frontend and became curious\n       about how APIs, databases, and servers work.\n       Learned Node.js and backend fundamentals.\n\n"
+  },
+  {
+    type: "log",
+    text: "[2021] Architecture obsession detected.\n       Built full stack projects, experimented with\n       authentication flows, CRUD systems, and\n       relational database design.\n\n"
+  },
+  {
+    type: "log",
+    text: "[2022] Scaling knowledge modules.\n       Explored C#, Laravel, PostgreSQL, MongoDB,\n       and software engineering practices.\n       Became interested in performance and clean architecture.\n\n"
+  },
+  {
+    type: "log",
+    text: "[2025] Production environment reached.\n       Joined internship and contributed to internal\n       HRIS + Payroll systems.\n       Worked on employee management, leave systems,\n       attendance, and reporting modules.\n\n"
+  },
+  {
+    type: "log",
+    text: "[CURRENT] Optimization mode active.\n       Building backend-heavy systems, integrating AI,\n       exploring distributed architectures, caching,\n       automation workflows, and scalable design.\n\n"
+  },
+  {
+    type: "log",
+    text: "[NEXT_TARGET]\n       Ship systems used at real scale.\n       Solve harder engineering problems.\n       Keep building things that last.\n"
+  }
+];
 
 
 
