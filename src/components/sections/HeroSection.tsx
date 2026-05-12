@@ -31,7 +31,7 @@ export const HeroSection = () => {
             </CursorHoverBlock>
             <CursorHoverBlock>
               <div className="inline-block brutal-border bg-white px-6 py-3 font-mono text-xl font-bold uppercase brutal-shadow">
-                Fullstack
+                DevOps
               </div>
             </CursorHoverBlock>
           </div>

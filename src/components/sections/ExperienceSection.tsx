@@ -8,8 +8,14 @@ export const ExperienceSection = () => {
   const [activeId, setActiveId] = useState<number | null>(null);
 
   return (
-    <section id="experience" className="py-24 px-6 md:px-12 brutal-border-b bg-white">
-      <div className="container mx-auto max-w-5xl">
+   <section
+  id="experience"
+  className="relative py-24 px-6 md:px-12 brutal-border-b bg-[#f7f2e8] overflow-hidden"
+>
+  <div className="absolute inset-0 opacity-30 pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:18px_18px]" />
+  <div className="relative container mx-auto max-w-5xl">
+
+
         <motion.h2 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
